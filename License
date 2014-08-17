@@ -1,4 +1,8 @@
-This module is licenced under the BSD license.
+This application is licensed under the BSD license.
+
+Copyright (C) 2011 by Ivan Chernov <ichernov (at) me (dot) com>.
+
+StackScrollView module is licensed under the BSD license.
 
 Copyright (C) 2011 by raw engineering <nikhil.jain (at) raweng (dot) com, reefaq.mohammed (at) raweng (dot) com>.
 
@@ -8,8 +12,7 @@ Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
 are met:
 
-    * Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
+    * Redistributions of source code are strictly prohibited.
 
     * Redistributions in binary form must reproduce the above copyright
     notice, this list of conditions and the following disclaimer in the
