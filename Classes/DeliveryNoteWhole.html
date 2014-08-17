@@ -1,0 +1,1130 @@
+<!doctype html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Delivery Note</title>
+        <style>
+            body {
+                font-size: 10pt;
+                font-family: serif;
+            }
+            
+            table {
+                border-collapse: collapse;
+                table-layout: fixed;
+            }
+            
+            td {
+                vertical-align: top;
+            }
+            
+            th {
+                font-weight: normal;
+            }
+            
+            .wrap {
+                /*width: 297mm;*/
+            }
+            
+            .valueCell {
+                border-bottom: 1pt solid #999999;
+            }
+            
+            .valueRow td {
+                min-height: 10pt;
+                vertical-align: bottom;
+            }
+            
+            .commentRow td {
+                font-size: 6pt;
+                height: 6pt;
+                text-align: center;
+                vertical-align: top;
+            }
+            
+            .labelCell_multiline {
+                line-height: 1;
+                padding-top: 2.5pt;
+                vertical-align: top !important;
+            }
+            
+            /** @section top */
+            .top {
+                margin-bottom: 10pt;
+                width: 100%;
+            }
+            
+            .top-requisitesCol {
+                width: 70%;
+            }
+            
+            .top-spaceCol {
+                width: 1%;
+            }
+            
+            .top-codesCol {
+                width: 29%;
+            }
+            
+            .top-codesCell {
+                vertical-align: bottom;
+            }
+            
+            .top-captionCell {
+                vertical-align: bottom;
+            }
+            
+            /** @subsection requisites */
+            .requisites {
+                margin-bottom: 10pt;
+                width: 100%;
+            }
+            
+            .requisites-labelCol {
+                width: 85pt;
+            }
+            
+            /** @subsection codes */
+            .codes {
+                width: 100%;
+            }
+            
+            .codes td {
+                height: 15pt;
+                vertical-align: middle;
+            }
+            
+            .codes-nameCol {
+                width: 110pt;
+            }
+            
+            .codes-labelCol {
+                width: 55pt;
+            }
+            
+            .codes-labelCell {
+                padding-right: 3pt;
+                text-align: right;
+            }
+            
+            .codes-labelCell_highlighted {
+                border: 1pt solid #999999;
+            }
+            
+            .codes-valueCell {
+                border: solid #999999;
+                border-width: 1pt 2pt;
+                font-size: 9pt;
+                text-align: center;
+            }
+            
+            .codes-valueCell_first {
+                border-width: 1pt 1pt 2pt;
+            }
+            
+            .codes-valueCell_last {
+                border-width: 1pt 2pt 2pt;
+            }
+            
+            /** @subsection heading */
+            .caption {
+                margin-left: auto;
+            }
+            
+            .caption td {
+                vertical-align: middle;
+            }
+            
+            .caption-valueCol {
+                width: 88pt;
+            }
+            
+            .caption-captionCell {
+                font-size: 14pt;
+                font-weight: bold;
+                padding-right: 10pt;
+                text-transform: uppercase;
+            }
+            
+            .caption-labelCell {
+                border: 1pt solid #999999;
+                text-align: center;
+            }
+            
+            .caption-valueCell {
+                border: 2pt solid #999999;
+                text-align: center;
+            }
+            
+            /** @section data */
+            .data {
+                margin-bottom: 10pt;
+                width: 100%;
+            }
+            
+            .data-numberCol {
+                width: 4em;
+            }
+            
+            .data-itemCodeCol {
+                width: 3.2em;
+            }
+            
+            .data-measureCol {
+                width: 4.5em;
+            }
+            
+            .data-packageCol {
+                width: 4em;
+            }
+            
+            .data-quantityCol {
+                width: 4em;
+            }
+            
+            .data-weightCol {
+                width: 5.6em;
+            }
+            
+            .data-priceCol {
+                width: 6em;
+            }
+            
+            .data-taxCol {
+                width: 4.4em;
+            }
+            
+            .data-colNumbersRow th {
+                font-size: 7pt;
+                padding: 2pt 0;
+                vertical-align: middle;
+            }
+            
+            .data-numericCell {
+                text-align: right;
+            }
+            
+            .data-unitCell {
+                text-align: center;
+            }
+            
+            .data-headCell {
+                border: 1pt solid #999999;
+                text-align: center;
+                vertical-align: middle;
+            }
+            
+            .data-topHighlightedCell {
+                border-bottom: 2pt solid #999999;
+            }
+            
+            .data-middleCell {
+                border: 1pt solid #999999;
+                padding: 0 2pt;
+            }
+            
+            .data-middleLeftHighlightedCell {
+                border-left: 2pt solid #999999;
+            }
+            
+            .data-middleRightHighlightedCell {
+                border-right: 2pt solid #999999;
+            }
+            
+            .data-bottomCell {
+                border: 1pt solid #999999;
+            }
+            
+            .data-bottomHighlightedCell {
+                border-top: 2pt solid #999999;
+            }
+            
+            .data-bottomLabelCell {
+                padding-right: 5pt;
+            }
+            
+            /** @section attachments */
+            .attachments {
+                width: 100%;
+            }
+            
+            .attachments-labelCol_left {
+                width: 5.5em;
+            }
+            
+            .attachments-labelCol_left_additional {
+                width: 12em;
+            }
+            
+            .attachments-labelCol_right {
+                width: 13.5em;
+            }
+            
+            .attachments-labelCell_right {
+                text-align: right;
+            }
+            
+            /** @section weight */
+            .weight {
+                margin-left: auto;
+                margin-top: -10pt;
+                width: 100%;
+            }
+            
+            .weight-labelCol {
+                width: 9.5em;
+            }
+            
+            .weight-valueCol_right {
+                width: 12.5em;
+            }
+            
+            .weight-valueRow td {
+                height: 20pt;
+            }
+            
+            .weight-valueCell {
+                border-left: 2pt solid #999999;
+                border-right: 2pt solid #999999;
+            }
+            
+            .weight-valueCell_top {
+                border-top: 2pt solid #999999;
+            }
+            
+            .weight-valueCell_bottom {
+                border-bottom: 2pt solid #999999;
+            }
+            
+            /** @section separator */
+            .separator {
+                width: 100%;
+            }
+            
+            .separator-col {
+                width: 50%;
+            }
+            
+            .separator-cell_left {
+                padding-right: 12pt;
+            }
+            
+            .separator_bottom-cell_left {
+                border-right: 1pt solid #999999;
+            }
+            
+            .separator-cell_right {
+                padding-left: 12pt;
+            }
+            
+            /** @section bottom-line */
+            .bottom-line {
+                width: 100%;
+            }
+            
+            /** @subsection attachments */
+            .bottom-line_attachments-labelCol_left {
+                width: 20.5em;
+            }
+            
+            .bottom-line_attachments-labelCol_right {
+                width: 3.5em;
+            }
+            
+            .bottom-line_attachments-labelCell_right {
+                text-align: right;
+            }
+            
+            /** @subsection sum */
+            .bottom-line_sum-label {
+                width: 11.5em;
+            }
+            
+            .bottom-line_sum_additional-labelCol {
+                width: 2.3em;
+            }
+            
+            .bottom-line_sum_additional-copecksCol {
+                width: 3em;
+            }
+            
+            .bottom-line_sum_additional-labelCell {
+                text-align: right;
+            }
+            
+            /** @subsection credentials */
+            .bottom-line_credentials-labelCol {
+                width: 7.5em;
+            }
+            
+            .bottom-line_credentials-spaceCol {
+                width: 0.4em;
+            }
+            
+            .bottom-line_credentials-signCol {
+                width: 7em;
+            }
+            
+            .bottom-line_credentials-signDescriptionCol {
+                width: 11em;
+            }
+            
+            /** @subsection warrant */
+            .bottom-line_warrant-labelCol {
+                width: 12%;
+            }
+            
+            .bottom-line_warrant-numberLabelCol {
+                width: 9em;
+            }
+            
+            .bottom-line_warrant-numberCol {
+                width: 4em;
+            }
+            
+            .bottom-line_warrant-quoteCol_left {
+                width: 2.4em;
+            }
+            
+            .bottom-line_warrant-dayCol {
+                width: 2em;
+            }
+            
+            .bottom-line_warrant-quoteCol_right {
+                width: 1em;
+            }
+            
+            .bottom-line_warrant-spaceCol {
+                width: 0.4em;
+            }
+            
+            .bottom-line_warrant-yearCol {
+                width: 3em;
+            }
+            
+            .bottom-line_warrant-yearLabelCol {
+                width: 2.3em;
+            }
+            
+            .bottom-line_warrant-centerCell {
+                text-align: center;
+            }
+            
+            .bottom-line_warrant-rightCell {
+                text-align: right;
+            }
+            
+            /** @section sign */
+            .sign {
+                margin-top: 15pt;
+                width: 60%;
+            }
+            
+            .sign-stampCol {
+                width: 6em;
+            }
+            
+            .sign-quoteCol {
+                width: 1em;
+            }
+            
+            .sign-rightCell {
+                text-align: right;
+            }
+            
+            .sign-dayCol {
+                width: 2em;
+            }
+            
+            .sign-spaceCol {
+                width: 0.4em;
+            }
+            
+            .sign-yearCol {
+                width: 3em;
+            }
+            
+            .sign-yearLabelCol {
+                width: 2.3em;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="wrap">
+
+            <table class="top">
+                <colgroup>
+                    <col class="top-requisitesCol">
+                    <col class="top-spaceCol">
+                    <col class="top-codesCol">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td class="top-requisitesCell">
+
+                            <table class="requisites">
+                                <tbody>
+                                    <tr class="valueRow">
+                                        <td class="valueCell">&nbsp;{{ deliveryNoteEntity }}</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>организация-грузоотправитель, адрес, номер телефона, банковские реквизиты</td>
+                                    </tr>
+                                    <tr class="valueRow">
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>структурное подразделение</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="requisites">
+                                <colgroup>
+                                    <col class="requisites-labelCol">
+                                </colgroup>
+                                <tbody>
+                                    <tr class="valueRow">
+                                        <td class="requisites-label">Грузополучатель</td>
+                                        <td class="valueCell">&nbsp;{{ clNameLabel }}, {{ clRequisites }}</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td></td>
+                                        <td>наименование организации, адрес, номер телефона, банковские реквизиты</td>
+                                    </tr>
+                                    <tr class="valueRow">
+                                        <td class="requisites-labelCell">Поставщик</td>
+                                        <td class="valueCell">&nbsp;{{ deliveryNoteEntity }}</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td></td>
+                                        <td>наименование организации, адрес, номер телефона, банковские реквизиты</td>
+                                    </tr>
+                                    <tr class="valueRow">
+                                        <td class="requisites-label">Плательщик</td>
+                                        <td class="valueCell">&nbsp;{{ clNameLabel }}, {{ clRequisites }}</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td></td>
+                                        <td>наименование организации, адрес, номер телефона, банковские реквизиты</td>
+                                    </tr>
+                                    <tr class="valueRow">
+                                        <td class="requisites-label">Основание</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td></td>
+                                        <td>договор, заказ-наряд</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                        <td rowspan="2">&nbsp;</td>
+                        <td class="top-codesCell" rowspan="2">
+
+                            <table class="codes">
+                                <colgroup>
+                                    <col class="codes-nameCol">
+                                    <col class="codes-labelCol">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td class="codes-labelCell" colspan="2">&nbsp;</td>
+                                        <td class="codes-valueCell codes-valueCell_first">Код</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="codes-labelCell" colspan="2">Форма по ОКУД</td>
+                                        <td class="codes-valueCell">0330212</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="codes-labelCell" colspan="2">по ОКПО</td>
+                                        <td class="codes-valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="codes-labelCell" colspan="2">&nbsp;</td>
+                                        <td class="codes-valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="codes-labelCell" colspan="2">Вид деятельности по ОКПД</td>
+                                        <td class="codes-valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="codes-labelCell" colspan="2">по ОКПО</td>
+                                        <td class="codes-valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="codes-labelCell" colspan="2">по ОКПО</td>
+                                        <td class="codes-valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="codes-labelCell" colspan="2">по ОКПО</td>
+                                        <td class="codes-valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td class="codes-labelCell codes-labelCell_highlighted">номер</td>
+                                        <td class="codes-valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td class="codes-labelCell codes-labelCell_highlighted">дата</td>
+                                        <td class="codes-valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Транспортная накладная</td>
+                                        <td class="codes-labelCell codes-labelCell_highlighted">номер</td>
+                                        <td class="codes-valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td class="codes-labelCell codes-labelCell_highlighted">дата</td>
+                                        <td class="codes-valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="codes-labelCell" colspan="2">Вид операции</td>
+                                        <td class="codes-valueCell codes-valueCell_last">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="top-captionCell">
+
+                            <table class="caption">
+                                <colgroup>
+                                    <col>
+                                    <col class="caption-valueCol">
+                                    <col class="caption-valueCol">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td class="caption-labelCell">Номер документа</td>
+                                        <td class="caption-labelCell">Дата составления</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="caption-captionCell">Товарная накладная</td>
+                                        <td class="caption-valueCell">&nbsp;{{ docNumbLabel }}</td>
+                                        <td class="caption-valueCell">&nbsp;{{ docDateLabel }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="data">
+                <colgroup>
+                    <col class="data-numberCol">
+                    <col>
+                    <col class="data-itemCodeCol">
+                    <col class="data-measureCol">
+                    <col class="data-measureCol">
+                    <col class="data-packageCol">
+                    <col class="data-quantityCol">
+                    <col class="data-quantityCol">
+                    <col class="data-weightCol">
+                    <col class="data-weightCol">
+                    <col class="data-priceCol">
+                    <col class="data-priceCol">
+                    <col class="data-taxCol">
+                    <col class="data-taxCol">
+                    <col class="data-priceCol">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="data-headCell" rowspan="2">Номер по порядку</th>
+                        <th class="data-headCell" colspan="2">Товар</th>
+                        <th class="data-headCell" colspan="2">Единица измерения</th>
+                        <th class="data-headCell" rowspan="2">Вид упаков-<br>ки</th>
+                        <th class="data-headCell" colspan="2">Количество</th>
+                        <th class="data-headCell" rowspan="2">Масса брутто</th>
+                        <th class="data-headCell" rowspan="2">Количество (масса нетто)</th>
+                        <th class="data-headCell" rowspan="2">Цена, руб. коп.</th>
+                        <th class="data-headCell" rowspan="2">Сумма без учета НДС, руб. коп.</th>
+                        <th class="data-headCell" colspan="2">НДС</th>
+                        <th class="data-headCell" rowspan="2">Сумма с учетом НДС, руб. коп.</th>
+                    </tr>
+                    <tr>
+                        <th class="data-headCell">наименование, характеристика, сорт, артикул товара</th>
+                        <th class="data-headCell">код</th>
+                        <th class="data-headCell">наимено-<br>вание</th>
+                        <th class="data-headCell">код по ОКЕИ</th>
+                        <th class="data-headCell">в одном месте</th>
+                        <th class="data-headCell">мест, штук</th>
+                        <th class="data-headCell">ставка, %</th>
+                        <th class="data-headCell">сумма, руб. коп.</th>
+                    </tr>
+                    <tr class="data-colNumbersRow">
+                        <th class="data-headCell">1</th>
+                        <th class="data-headCell">2</th>
+                        <th class="data-headCell data-topHighlightedCell">3</th>
+                        <th class="data-headCell">4</th>
+                        <th class="data-headCell data-topHighlightedCell">5</th>
+                        <th class="data-headCell data-topHighlightedCell">6</th>
+                        <th class="data-headCell data-topHighlightedCell">7</th>
+                        <th class="data-headCell data-topHighlightedCell">8</th>
+                        <th class="data-headCell data-topHighlightedCell">9</th>
+                        <th class="data-headCell data-topHighlightedCell">10</th>
+                        <th class="data-headCell data-topHighlightedCell">11</th>
+                        <th class="data-headCell data-topHighlightedCell">12</th>
+                        <th class="data-headCell">13</th>
+                        <th class="data-headCell data-topHighlightedCell">14</th>
+                        <th class="data-headCell data-topHighlightedCell">15</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="data-bottomHighlightedCell">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="data-bottomLabelCell data-numericCell data-bottomHighlightedCell" colspan="2">Итого</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;</td>
+                        <td class="data-bottomCell data-unitCell data-bottomHighlightedCell">X</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;{{ summary }}</td>
+                        <td class="data-bottomCell data-unitCell">X</td>
+                        <td class="data-bottomCell data-unitCell data-bottomHighlightedCell">X</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;{{ summary }}</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="data-bottomLabelCell data-numericCell" colspan="3">Всего по накладной</td>
+                        <td class="data-bottomCell data-numericCell">&nbsp;</td>
+                        <td class="data-bottomCell data-numericCell">&nbsp;</td>
+                        <td class="data-bottomCell data-numericCell">&nbsp;</td>
+                        <td class="data-bottomCell data-numericCell">&nbsp;</td>
+                        <td class="data-bottomCell data-unitCell">X</td>
+                        <td class="data-bottomCell data-numericCell">&nbsp;{{ wholeSummary }}</td>
+                        <td class="data-bottomCell data-unitCell">X</td>
+                        <td class="data-bottomCell data-unitCell">X</td>
+                        <td class="data-bottomCell data-numericCell">&nbsp;{{ summary }}</td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td class="data-middleCell data-unitCell">&nbsp;{{ item.number }}</td>
+                        <td class="data-middleCell">&nbsp;{{ item.Name }}</td>
+                        <td class="data-middleCell data-unitCell data-middleLeftHighlightedCell data-middleRightHighlightedCell">&nbsp;</td>
+                        <td class="data-middleCell data-unitCell">&nbsp;{{ item.Edizm }}</td>
+                        <td class="data-middleCell data-unitCell data-middleLeftHighlightedCell">&nbsp;</td>
+                        <td class="data-middleCell data-unitCell">&nbsp;</td>
+                        <td class="data-middleCell data-numericCell">&nbsp;</td>
+                        <td class="data-middleCell data-numericCell">&nbsp;</td>
+                        <td class="data-middleCell data-numericCell">&nbsp;</td>
+                        <td class="data-middleCell data-numericCell">&nbsp;{{ item.Qty }}</td>
+                        <td class="data-middleCell data-numericCell">&nbsp;{{ item.Cost }}</td>
+                        <td class="data-middleCell data-numericCell data-middleRightHighlightedCell">&nbsp;{{ item.Summary }}</td>
+                        <td class="data-middleCell data-unitCell">Без НДС</td>
+                        <td class="data-middleCell data-numericCell data-middleLeftHighlightedCell">&nbsp;</td>
+                        <td class="data-middleCell data-numericCell data-middleRightHighlightedCell">&nbsp;{{ item.Summary }}</td>
+                    </tr>
+                    {% /for %}
+                </tbody>
+            </table>
+
+            <table class="attachments">
+                <colgroup>
+                    <col class="attachments-labelCol_left">
+                    <col class="attachments-labelCol_left_additional">
+                    <col>
+                    <col class="attachments-labelCol_right">
+                </colgroup>
+                <tbody>
+                    <tr class="valueRow">
+                        <td class="attachments-labelCell_left" colspan="2">Товарная накладная имеет приложение</td>
+                        <td class="valueCell" colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr class="commentRow">
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr class="valueRow">
+                        <td class="attachments-labelCell_left">и содержит</td>
+                        <td class="valueCell" colspan="2">&nbsp;один</td>
+                        <td class="attachments-labelCell_right">порядковых номеров записей</td>
+                    </tr>
+                    <tr class="commentRow">
+                        <td>&nbsp;</td>
+                        <td colspan="2">прописью</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="separator">
+                <colgroup>
+                    <col class="separator-col">
+                    <col class="separator-col">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td class="separator-cell_left">
+
+                            <table class="attachments attachments_additional">
+                                <colgroup>
+                                    <col class="attachments-labelCol_left">
+                                </colgroup>
+                                <tbody>
+                                    <tr class="valueRow">
+                                        <td class="attachments-labelCell_left">Всего мест</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                        <td>прописью</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                        <td class="separator-cell_right">
+
+                            <table class="weight">
+                                <colgroup>
+                                    <col class="weight-labelCol">
+                                    <col class="weight-valueCol_left">
+                                    <col class="weight-valueCol_right">
+                                </colgroup>
+                                <tbody>
+                                    <tr class="valueRow weight-valueRow">
+                                        <td>Масса груза (нетто)</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="valueCell weight-valueCell weight-valueCell_top">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                        <td>прописью</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="weight">
+                                <colgroup>
+                                    <col class="weight-labelCol">
+                                    <col class="weight-valueCol_left">
+                                    <col class="weight-valueCol_right">
+                                </colgroup>
+                                <tbody>
+                                    <tr class="valueRow weight-valueRow">
+                                        <td>Масса груза (брутто)</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="valueCell weight-valueCell weight-valueCell_bottom">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                        <td>прописью</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="separator separator_bottom">
+                <colgroup>
+                    <col class="separator-col">
+                    <col class="separator-col">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td class="separator-cell_left separator_bottom-cell_left">
+
+                            <table class="bottom-line bottom-line_attachments">
+                                <colgroup>
+                                    <col class="bottom-line_attachments-labelCol_left">
+                                    <col>
+                                    <col class="bottom-line_attachments-labelCol_right">
+                                </colgroup>
+                                <tbody>
+                                    <tr class="valueRow">
+                                        <td class="labelCell">
+                                            Приложение (паспорта, сертификаты и т.п.) на
+                                        </td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell bottom-line_attachments-labelCell_right">листах</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                        <td>прописью</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="bottom-line bottom-line_sum">
+                                <colgroup>
+                                    <col class="bottom-line_sum-label">
+                                </colgroup>
+                                <tbody>
+                                    <tr class="valueRow">
+                                        <td class="labelCell">
+                                            Всего отпущено на сумму
+                                        </td>
+                                        <td class="valueCell">&nbsp;{{ summaryWord }}</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                        <td>прописью</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="bottom-line bottom-line_sum_additional">
+                                <colgroup>
+                                    <col>
+                                    <col class="bottom-line_sum_additional-labelCol">
+                                    <col class="bottom-line_sum_additional-copecksCol">
+                                    <col class="bottom-line_sum_additional-labelCol">
+                                </colgroup>
+                               
+                            </table>
+
+                            <table class="bottom-line bottom-line_credentials">
+                                <colgroup>
+                                    <col class="bottom-line_credentials-labelCol">
+                                    <col>
+                                    <col class="bottom-line_credentials-spaceCol">
+                                    <col class="bottom-line_credentials-signCol">
+                                    <col class="bottom-line_credentials-spaceCol">
+                                    <col class="bottom-line_credentials-signDescriptionCol">
+                                </colgroup>
+                                <tbody>
+                                    <tr class="valueRow">
+                                        <td class="labelCell labelCell_multiline" rowspan="2">
+                                            Отпуск груза разрешил
+                                        </td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell">&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell">&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>должность</td>
+                                        <td>&nbsp;</td>
+                                        <td>подпись</td>
+                                        <td>&nbsp;</td>
+                                        <td>расшифировка подписи</td>
+                                    </tr>
+                                    <tr class="valueRow">
+                                        <td class="labelCell labelCell_multiline" colspan="2" rowspan="2">
+                                            Главный (старший) бухгалтер
+                                        </td>
+                                        <td class="labelCell">&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell">&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                        <td>подпись</td>
+                                        <td>&nbsp;</td>
+                                        <td>расшифировка подписи</td>
+                                    </tr>
+                                        <td class="labelCell labelCell_multiline" rowspan="2">
+                                            Отпуск груза произвел
+                                        </td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell">&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell">&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>должность</td>
+                                        <td>&nbsp;</td>
+                                        <td>подпись</td>
+                                        <td>&nbsp;</td>
+                                        <td>расшифировка подписи</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="sign">
+                                <colgroup>
+                                    <col class="sign-stampCol">
+                                    <col class="sign-quoteCol">
+                                    <col class="sign-dayCol">
+                                    <col class="sign-quoteCol">
+                                    <col>
+                                    <col class="sign-spaceCol">
+                                    <col class="sign-yearCol">
+                                    <col class="sign-yearLabelCol">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td>М. П.</td>
+                                        <td class="sign-rightCell">&laquo;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td>&raquo;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="sign-rightCell">года</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                        <td class="separator-cell_right">
+
+                            <table class="bottom-line bottom-line_warrant">
+                                <colgroup>
+                                    <col class="bottom-line_warrant-numberLabelCol">
+                                    <col class="bottom-line_warrant-numberCol">
+                                    <col class="bottom-line_warrant-quoteCol_left">
+                                    <col class="bottom-line_warrant-dayCol">
+                                    <col class="bottom-line_warrant-quoteCol_right">
+                                    <col>
+                                    <col class="bottom-line_warrant-spaceCol">
+                                    <col class="bottom-line_warrant-yearCol">
+                                    <col class="bottom-line_warrant-yearLabelCol">
+                                </colgroup>
+                                <tbody>
+                                    <tr class="valueRow">
+                                        <td class="labelCell">
+                                            По доверенности №
+                                        </td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell bottom-line_warrant-centerCell">от &laquo;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell bottom-line_warrant-centerCell">&raquo;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell bottom-line_warrant-rightCell">года</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="bottom-line bottom-line_warrant_additional">
+                                <colgroup>
+                                    <col class="bottom-line_warrant-labelCol">
+                                </colgroup>
+                                <tbody>
+                                    <tr class="valueRow">
+                                        <td class="labelCell">
+                                            Выданной
+                                        </td>
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                        <td>кем, кому (организация, должность, фамилия, и., о.)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="bottom-line bottom-line_warrant_additional">
+                                <tbody>
+                                    <tr class="valueRow">
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr class="valueRow">
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="bottom-line bottom-line_credentials">
+                                <colgroup>
+                                    <col class="bottom-line_credentials-labelCol">
+                                    <col>
+                                    <col class="bottom-line_credentials-spaceCol">
+                                    <col class="bottom-line_credentials-signCol">
+                                    <col class="bottom-line_credentials-spaceCol">
+                                    <col class="bottom-line_credentials-signDescriptionCol">
+                                </colgroup>
+                                <tbody>
+                                    <tr class="valueRow">
+                                        <td class="labelCell">
+                                            Груз принял
+                                        </td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell">&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell">&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>&nbsp;</td>
+                                        <td>должность</td>
+                                        <td>&nbsp;</td>
+                                        <td>подпись</td>
+                                        <td>&nbsp;</td>
+                                        <td>расшифировка подписи</td>
+                                    </tr>
+                                    <tr class="valueRow">
+                                        <td class="labelCell labelCell_multiline" rowspan="2">Груз получил грузополучатель</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell">&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="labelCell">&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                    </tr>
+                                    <tr class="commentRow">
+                                        <td>должность</td>
+                                        <td>&nbsp;</td>
+                                        <td>подпись</td>
+                                        <td>&nbsp;</td>
+                                        <td>расшифировка подписи</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="sign">
+                                <colgroup>
+                                    <col class="sign-stampCol">
+                                    <col class="sign-quoteCol">
+                                    <col class="sign-dayCol">
+                                    <col class="sign-quoteCol">
+                                    <col>
+                                    <col class="sign-spaceCol">
+                                    <col class="sign-yearCol">
+                                    <col class="sign-yearLabelCol">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td>М. П.</td>
+                                        <td class="sign-rightCell">&laquo;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td>&raquo;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td class="valueCell">&nbsp;</td>
+                                        <td class="sign-rightCell">года</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </body>
+</html>

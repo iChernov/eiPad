@@ -1,0 +1,141 @@
+body {
+    font-size: 11pt;
+    font-family: serif;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+td {
+    vertical-align: top;
+}
+
+th {
+    font-weight: normal;
+    text-align: left;
+}
+
+h1 {
+    font-size: 14pt;
+    font-weight: normal;
+    margin-bottom: 20pt;
+    text-align: center;
+}
+
+p {
+    margin: 0 0 15pt;
+}
+
+.wrap {
+    margin: 0 auto;
+    width: 18cm;
+}
+
+/** @section credentials_top */
+.credentials_top {
+    margin-bottom: 10pt;
+    width: 100%;
+}
+
+.credentials_top-labelCol {
+    width: 7em;
+}
+
+.credentials_top-valueCell {
+    font-weight: bold;
+}
+
+/** @section data */
+.data {
+    margin-bottom: 10pt;
+    width: 100%;
+}
+
+.data-headRow th {
+    border: 1pt solid #999999;
+    font-weight: bold;
+    padding: 4pt 0;
+    text-align: center;
+}
+
+.data-footRow td {
+    font-weight: bold;
+}
+
+.data-row td {
+    border: 1pt solid #999999;
+    padding: 2pt;
+}
+
+.data-cell_numeric {
+    text-align: right;
+}
+
+.data-cell_decorative {
+    text-align: center;
+}
+
+.data-numberCol {
+    width: 5%;
+}
+
+.data-countCol {
+    width: 10%;
+}
+
+.data-unitCol {
+    width: 10%;
+}
+
+.data-priceCol {
+    width: 12%;
+}
+
+.data-sumCol {
+    width: 15%;
+}
+
+/** @section credentials_bottom */
+.credentials_bottom {
+    margin-bottom: 4pt;
+    width: 100%;
+}
+
+.credentials_bottom-col_space {
+    width: 2em;
+}
+
+.credentials_bottom-col_label_address {
+    width: 3.5em;
+}
+
+.credentials_bottom-col_value_address_narrow {
+    width: 8em;
+}
+
+.credentials_bottom-col_label_bank {
+    width: 3em;
+}
+
+.credentials_bottom td {
+    padding: 2pt 0;
+}
+
+.credentials_bottom-cell_name {
+    font-weight: bold;
+}
+
+.stamp {
+    margin: 15pt auto 0;
+    width: 12em;
+}
+
+.stamp-value {
+    border-bottom: 1pt solid #999999;
+}
+
+.stamp-label {
+    text-align: center;
+}

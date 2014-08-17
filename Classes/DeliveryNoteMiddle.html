@@ -1,0 +1,564 @@
+<!doctype html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Delivery Note</title>
+        <style>
+            body {
+                font-size: 10pt;
+                font-family: serif;
+            }
+            
+            table {
+                border-collapse: collapse;
+                table-layout: fixed;
+            }
+            
+            td {
+                vertical-align: top;
+            }
+            
+            th {
+                font-weight: normal;
+            }
+            
+            .wrap {
+                /*width: 297mm;*/
+            }
+            
+            .valueCell {
+                border-bottom: 1pt solid #999999;
+            }
+            
+            .valueRow td {
+                min-height: 10pt;
+                vertical-align: bottom;
+            }
+            
+            .commentRow td {
+                font-size: 6pt;
+                height: 6pt;
+                text-align: center;
+                vertical-align: top;
+            }
+            
+            .labelCell_multiline {
+                line-height: 1;
+                padding-top: 2.5pt;
+                vertical-align: top !important;
+            }
+            
+            /** @section top */
+            .top {
+                margin-bottom: 10pt;
+                width: 100%;
+            }
+            
+            .top-requisitesCol {
+                width: 70%;
+            }
+            
+            .top-spaceCol {
+                width: 1%;
+            }
+            
+            .top-codesCol {
+                width: 29%;
+            }
+            
+            .top-codesCell {
+                vertical-align: bottom;
+            }
+            
+            .top-captionCell {
+                vertical-align: bottom;
+            }
+            
+            /** @subsection requisites */
+            .requisites {
+                margin-bottom: 10pt;
+                width: 100%;
+            }
+            
+            .requisites-labelCol {
+                width: 85pt;
+            }
+            
+            /** @subsection codes */
+            .codes {
+                width: 100%;
+            }
+            
+            .codes td {
+                height: 15pt;
+                vertical-align: middle;
+            }
+            
+            .codes-nameCol {
+                width: 110pt;
+            }
+            
+            .codes-labelCol {
+                width: 55pt;
+            }
+            
+            .codes-labelCell {
+                padding-right: 3pt;
+                text-align: right;
+            }
+            
+            .codes-labelCell_highlighted {
+                border: 1pt solid #999999;
+            }
+            
+            .codes-valueCell {
+                border: solid #999999;
+                border-width: 1pt 2pt;
+                font-size: 9pt;
+                text-align: center;
+            }
+            
+            .codes-valueCell_first {
+                border-width: 1pt 1pt 2pt;
+            }
+            
+            .codes-valueCell_last {
+                border-width: 1pt 2pt 2pt;
+            }
+            
+            /** @subsection heading */
+            .caption {
+                margin-left: auto;
+            }
+            
+            .caption td {
+                vertical-align: middle;
+            }
+            
+            .caption-valueCol {
+                width: 88pt;
+            }
+            
+            .caption-captionCell {
+                font-size: 14pt;
+                font-weight: bold;
+                padding-right: 10pt;
+                text-transform: uppercase;
+            }
+            
+            .caption-labelCell {
+                border: 1pt solid #999999;
+                text-align: center;
+            }
+            
+            .caption-valueCell {
+                border: 2pt solid #999999;
+                text-align: center;
+            }
+            
+            /** @section data */
+            .data {
+                margin-bottom: 10pt;
+                width: 100%;
+            }
+            
+            .data-numberCol {
+                width: 4em;
+            }
+            
+            .data-itemCodeCol {
+                width: 3.2em;
+            }
+            
+            .data-measureCol {
+                width: 4.5em;
+            }
+            
+            .data-packageCol {
+                width: 4em;
+            }
+            
+            .data-quantityCol {
+                width: 4em;
+            }
+            
+            .data-weightCol {
+                width: 5.6em;
+            }
+            
+            .data-priceCol {
+                width: 6em;
+            }
+            
+            .data-taxCol {
+                width: 4.4em;
+            }
+            
+            .data-colNumbersRow th {
+                font-size: 7pt;
+                padding: 2pt 0;
+                vertical-align: middle;
+            }
+            
+            .data-numericCell {
+                text-align: right;
+            }
+            
+            .data-unitCell {
+                text-align: center;
+            }
+            
+            .data-headCell {
+                border: 1pt solid #999999;
+                text-align: center;
+                vertical-align: middle;
+            }
+            
+            .data-topHighlightedCell {
+                border-bottom: 2pt solid #999999;
+            }
+            
+            .data-middleCell {
+                border: 1pt solid #999999;
+                padding: 0 2pt;
+            }
+            
+            .data-middleLeftHighlightedCell {
+                border-left: 2pt solid #999999;
+            }
+            
+            .data-middleRightHighlightedCell {
+                border-right: 2pt solid #999999;
+            }
+            
+            .data-bottomCell {
+                border: 1pt solid #999999;
+            }
+            
+            .data-bottomHighlightedCell {
+                border-top: 2pt solid #999999;
+            }
+            
+            .data-bottomLabelCell {
+                padding-right: 5pt;
+            }
+            
+            /** @section attachments */
+            .attachments {
+                width: 100%;
+            }
+            
+            .attachments-labelCol_left {
+                width: 5.5em;
+            }
+            
+            .attachments-labelCol_left_additional {
+                width: 12em;
+            }
+            
+            .attachments-labelCol_right {
+                width: 13.5em;
+            }
+            
+            .attachments-labelCell_right {
+                text-align: right;
+            }
+            
+            /** @section weight */
+            .weight {
+                margin-left: auto;
+                margin-top: -10pt;
+                width: 100%;
+            }
+            
+            .weight-labelCol {
+                width: 9.5em;
+            }
+            
+            .weight-valueCol_right {
+                width: 12.5em;
+            }
+            
+            .weight-valueRow td {
+                height: 20pt;
+            }
+            
+            .weight-valueCell {
+                border-left: 2pt solid #999999;
+                border-right: 2pt solid #999999;
+            }
+            
+            .weight-valueCell_top {
+                border-top: 2pt solid #999999;
+            }
+            
+            .weight-valueCell_bottom {
+                border-bottom: 2pt solid #999999;
+            }
+            
+            /** @section separator */
+            .separator {
+                width: 100%;
+            }
+            
+            .separator-col {
+                width: 50%;
+            }
+            
+            .separator-cell_left {
+                padding-right: 12pt;
+            }
+            
+            .separator_bottom-cell_left {
+                border-right: 1pt solid #999999;
+            }
+            
+            .separator-cell_right {
+                padding-left: 12pt;
+            }
+            
+            /** @section bottom-line */
+            .bottom-line {
+                width: 100%;
+            }
+            
+            /** @subsection attachments */
+            .bottom-line_attachments-labelCol_left {
+                width: 20.5em;
+            }
+            
+            .bottom-line_attachments-labelCol_right {
+                width: 3.5em;
+            }
+            
+            .bottom-line_attachments-labelCell_right {
+                text-align: right;
+            }
+            
+            /** @subsection sum */
+            .bottom-line_sum-label {
+                width: 11.5em;
+            }
+            
+            .bottom-line_sum_additional-labelCol {
+                width: 2.3em;
+            }
+            
+            .bottom-line_sum_additional-copecksCol {
+                width: 3em;
+            }
+            
+            .bottom-line_sum_additional-labelCell {
+                text-align: right;
+            }
+            
+            /** @subsection credentials */
+            .bottom-line_credentials-labelCol {
+                width: 7.5em;
+            }
+            
+            .bottom-line_credentials-spaceCol {
+                width: 0.4em;
+            }
+            
+            .bottom-line_credentials-signCol {
+                width: 7em;
+            }
+            
+            .bottom-line_credentials-signDescriptionCol {
+                width: 11em;
+            }
+            
+            /** @subsection warrant */
+            .bottom-line_warrant-labelCol {
+                width: 12%;
+            }
+            
+            .bottom-line_warrant-numberLabelCol {
+                width: 9em;
+            }
+            
+            .bottom-line_warrant-numberCol {
+                width: 4em;
+            }
+            
+            .bottom-line_warrant-quoteCol_left {
+                width: 2.4em;
+            }
+            
+            .bottom-line_warrant-dayCol {
+                width: 2em;
+            }
+            
+            .bottom-line_warrant-quoteCol_right {
+                width: 1em;
+            }
+            
+            .bottom-line_warrant-spaceCol {
+                width: 0.4em;
+            }
+            
+            .bottom-line_warrant-yearCol {
+                width: 3em;
+            }
+            
+            .bottom-line_warrant-yearLabelCol {
+                width: 2.3em;
+            }
+            
+            .bottom-line_warrant-centerCell {
+                text-align: center;
+            }
+            
+            .bottom-line_warrant-rightCell {
+                text-align: right;
+            }
+            
+            /** @section sign */
+            .sign {
+                margin-top: 15pt;
+                width: 60%;
+            }
+            
+            .sign-stampCol {
+                width: 6em;
+            }
+            
+            .sign-quoteCol {
+                width: 1em;
+            }
+            
+            .sign-rightCell {
+                text-align: right;
+            }
+            
+            .sign-dayCol {
+                width: 2em;
+            }
+            
+            .sign-spaceCol {
+                width: 0.4em;
+            }
+            
+            .sign-yearCol {
+                width: 3em;
+            }
+            
+            .sign-yearLabelCol {
+                width: 2.3em;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="wrap">
+
+            
+
+            <table class="data">
+                <colgroup>
+                    <col class="data-numberCol">
+                    <col>
+                    <col class="data-itemCodeCol">
+                    <col class="data-measureCol">
+                    <col class="data-measureCol">
+                    <col class="data-packageCol">
+                    <col class="data-quantityCol">
+                    <col class="data-quantityCol">
+                    <col class="data-weightCol">
+                    <col class="data-weightCol">
+                    <col class="data-priceCol">
+                    <col class="data-priceCol">
+                    <col class="data-taxCol">
+                    <col class="data-taxCol">
+                    <col class="data-priceCol">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="data-headCell" rowspan="2">Номер по порядку</th>
+                        <th class="data-headCell" colspan="2">Товар</th>
+                        <th class="data-headCell" colspan="2">Единица измерения</th>
+                        <th class="data-headCell" rowspan="2">Вид упаков-<br>ки</th>
+                        <th class="data-headCell" colspan="2">Количество</th>
+                        <th class="data-headCell" rowspan="2">Масса брутто</th>
+                        <th class="data-headCell" rowspan="2">Количество (масса нетто)</th>
+                        <th class="data-headCell" rowspan="2">Цена, руб. коп.</th>
+                        <th class="data-headCell" rowspan="2">Сумма без учета НДС, руб. коп.</th>
+                        <th class="data-headCell" colspan="2">НДС</th>
+                        <th class="data-headCell" rowspan="2">Сумма с учетом НДС, руб. коп.</th>
+                    </tr>
+                    <tr>
+                        <th class="data-headCell">наименование, характеристика, сорт, артикул товара</th>
+                        <th class="data-headCell">код</th>
+                        <th class="data-headCell">наимено-<br>вание</th>
+                        <th class="data-headCell">код по ОКЕИ</th>
+                        <th class="data-headCell">в одном месте</th>
+                        <th class="data-headCell">мест, штук</th>
+                        <th class="data-headCell">ставка, %</th>
+                        <th class="data-headCell">сумма, руб. коп.</th>
+                    </tr>
+                    <tr class="data-colNumbersRow">
+                        <th class="data-headCell">1</th>
+                        <th class="data-headCell">2</th>
+                        <th class="data-headCell data-topHighlightedCell">3</th>
+                        <th class="data-headCell">4</th>
+                        <th class="data-headCell data-topHighlightedCell">5</th>
+                        <th class="data-headCell data-topHighlightedCell">6</th>
+                        <th class="data-headCell data-topHighlightedCell">7</th>
+                        <th class="data-headCell data-topHighlightedCell">8</th>
+                        <th class="data-headCell data-topHighlightedCell">9</th>
+                        <th class="data-headCell data-topHighlightedCell">10</th>
+                        <th class="data-headCell data-topHighlightedCell">11</th>
+                        <th class="data-headCell data-topHighlightedCell">12</th>
+                        <th class="data-headCell">13</th>
+                        <th class="data-headCell data-topHighlightedCell">14</th>
+                        <th class="data-headCell data-topHighlightedCell">15</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="data-bottomHighlightedCell">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="data-bottomLabelCell data-numericCell data-bottomHighlightedCell" colspan="2">Итого</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;</td>
+                        <td class="data-bottomCell data-unitCell data-bottomHighlightedCell">X</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;{{ summary }}</td>
+                        <td class="data-bottomCell data-unitCell">X</td>
+                        <td class="data-bottomCell data-unitCell data-bottomHighlightedCell">X</td>
+                        <td class="data-bottomCell data-numericCell data-bottomHighlightedCell">&nbsp;{{ summary }}</td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td class="data-middleCell data-unitCell">&nbsp;{{ item.number }}</td>
+                        <td class="data-middleCell">&nbsp;{{ item.Name }}</td>
+                        <td class="data-middleCell data-unitCell data-middleLeftHighlightedCell data-middleRightHighlightedCell">&nbsp;</td>
+                        <td class="data-middleCell data-unitCell">&nbsp;{{ item.Edizm }}</td>
+                        <td class="data-middleCell data-unitCell data-middleLeftHighlightedCell">&nbsp;</td>
+                        <td class="data-middleCell data-unitCell">&nbsp;</td>
+                        <td class="data-middleCell data-numericCell">&nbsp;</td>
+                        <td class="data-middleCell data-numericCell">&nbsp;</td>
+                        <td class="data-middleCell data-numericCell">&nbsp;</td>
+                        <td class="data-middleCell data-numericCell">&nbsp;{{ item.Qty }}</td>
+                        <td class="data-middleCell data-numericCell">&nbsp;{{ item.Cost }}</td>
+                        <td class="data-middleCell data-numericCell data-middleRightHighlightedCell">&nbsp;{{ item.Summary }}</td>
+                        <td class="data-middleCell data-unitCell">Без НДС</td>
+                        <td class="data-middleCell data-numericCell data-middleLeftHighlightedCell">&nbsp;</td>
+                        <td class="data-middleCell data-numericCell data-middleRightHighlightedCell">&nbsp;{{ item.Summary }}</td>
+                    </tr>
+                    {% /for %}
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </body>
+</html>

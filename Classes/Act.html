@@ -1,0 +1,364 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Act</title>
+        <style type="text/css">
+            body {
+                font-size: 11pt;
+                font-family: serif;
+            }
+            
+            table {
+                border-collapse: collapse;
+                table-layout: fixed;
+            }
+            
+            td {
+                vertical-align: top;
+            }
+            
+            th {
+                font-weight: normal;
+                text-align: left;
+            }
+            
+            h1 {
+                font-size: 14pt;
+                font-weight: normal;
+                margin-bottom: 20pt;
+                text-align: center;
+            }
+            
+            p {
+                margin: 0 0 15pt;
+            }
+            
+            .wrap {
+                margin: 0 auto;
+                width: 18cm;
+            }
+            
+            /** @section credentials_top */
+            .credentials_top {
+                margin-bottom: 10pt;
+                width: 100%;
+            }
+            
+            .credentials_top-labelCol {
+                width: 7em;
+            }
+            
+            .credentials_top-valueCell {
+                font-weight: bold;
+            }
+            
+            /** @section data */
+            .data {
+                margin-bottom: 10pt;
+                width: 100%;
+            }
+            
+            .data-headRow th {
+                border: 1pt solid #999999;
+                font-weight: bold;
+                padding: 4pt 0;
+                text-align: center;
+            }
+            
+            .data-footRow td {
+                font-weight: bold;
+            }
+            
+            .data-row td {
+                border: 1pt solid #999999;
+                padding: 2pt;
+            }
+            
+            .data-cell_numeric {
+                text-align: right;
+            }
+            
+            .data-cell_decorative {
+                text-align: center;
+            }
+            
+            .data-numberCol {
+                width: 5%;
+            }
+            
+            .data-countCol {
+                width: 10%;
+            }
+            
+            .data-unitCol {
+                width: 10%;
+            }
+            
+            .data-priceCol {
+                width: 12%;
+            }
+            
+            .data-sumCol {
+                width: 15%;
+            }
+            
+            /** @section credentials_bottom */
+            .credentials_bottom {
+                margin-bottom: 4pt;
+                width: 100%;
+            }
+            
+            .credentials_bottom-col_space {
+                width: 2em;
+            }
+            
+            .credentials_bottom-col_label_address {
+                width: 3.5em;
+            }
+            
+            .credentials_bottom-col_value_address_narrow {
+                width: 8em;
+            }
+            
+            .credentials_bottom-col_label_bank {
+                width: 3em;
+            }
+            
+            .credentials_bottom td {
+                padding: 2pt 0;
+            }
+            
+            .credentials_bottom-cell_name {
+                font-weight: bold;
+            }
+            
+            .stamp {
+                margin: 15pt auto 0;
+                width: 12em;
+            }
+            
+            .stamp-value {
+                border-bottom: 1pt solid #999999;
+            }
+            
+            .stamp-label {
+                text-align: center;
+            }
+        </style>
+        
+	</head>
+	<body>
+
+        <div class="wrap">
+
+            <h1>Акт <b>№&nbsp;{{ docNumbLabel }}</b> от <b>{{ docDateLabel }}&nbsp;г.</b></h1>
+
+            <table class="credentials_top">
+                <colgroup>
+                    <col class="credentials_top-labelCol">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>Исполнитель</td>
+                        <td class="credentials_top-valueCell">{{IPorOOO}} {{ selfName }}</td>
+                    </tr>
+                    <tr>
+                        <td>Заказчик</td>
+                        <td class="credentials_top-valueCell">{{ clNameLabel }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="data">
+                <colgroup>
+                    <col class="data-numberCol">
+                    <col>
+                    <col class="data-countCol">
+                    <col class="data-unitCol">
+                    <col class="data-priceCol">
+                    <col class="data-sumCol">
+                </colgroup>
+                <thead>
+                    <tr class="data-headRow">
+                        <th>№</th>
+                        <th>Наименование работ, услуг</th>
+                        <th>Кол-во</th>
+                        <th>Ед.</th>
+                        <th>Цена</th>
+                        <th>Сумма</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr class="data-footRow">
+                        <td class="data-cell_numeric" colspan="5">Итого:</td>
+                        <td class="data-cell_numeric">{{ summary }}</td>
+                    </tr>
+                    <tr class="data-footRow">
+                        <td class="data-cell_numeric" colspan="5">В т. ч. НДС</td>
+                        <td class="data-cell_numeric">Без НДС</td>
+                    </tr>
+                    <tr class="data-footRow">
+                        <td class="data-cell_numeric" colspan="5">Всего</td>
+                        <td class="data-cell_numeric">{{ summary }}</td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for item in items %}
+                    <tr class="data-row">
+                        <td class="data-cell_decorative">{{ item.number }}</td>
+                        <td>{{ item.Name }}</td>
+                        <td class="data-cell_numeric">{{ item.Qty }}</td>
+                        <td>{{ item.Edizm }}</td>
+                        <td class="data-cell_numeric">{{ item.Cost }}</td>
+                        <td class="data-cell_numeric">{{ item.Summary }}</td>
+                    </tr>
+                    {% /for %}
+                </tbody>
+            </table>
+
+            <p>
+                Общая стоимость выполненных работ, оказанных услуг: {{ summaryWord }}
+            </p>
+
+            <p>
+                Заказчик не имеет претензий к срокам, качеству и объему товаров и услуг.
+            </p>
+
+            <table class="credentials_bottom">
+                <colgroup>
+                    <col class="credentials_bottom-col_left">
+                    <col class="credentials_bottom-col_space">
+                    <col class="credentials_bottom-col_right">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>Исполнитель</td>
+                        <td>&nbsp;</td>
+                        <td>Заказчик</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="credentials_bottom">
+                <colgroup>
+                    <col class="credentials_bottom-col_label_address">
+                    <col class="credentials_bottom-col_value_address_narrow">
+                    <col class="credentials_bottom-col_label_address">
+                    <col class="credentials_bottom-col_value_address_wide">
+                    <col class="credentials_bottom-col_space">
+                    <col class="credentials_bottom-col_label_address">
+                    <col class="credentials_bottom-col_value_address_narrow">
+                    <col class="credentials_bottom-col_label_address">
+                    <col class="credentials_bottom-col_value_address_wide">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td class="credentials_bottom-cell_name" colspan="4">{{IPorOOO}} {{ selfName }}</td>
+                        <td>&nbsp;</td>
+                        <td class="credentials_bottom-cell_name" colspan="4">{{ clNameLabel }}</td>
+                    </tr>
+                    <tr>
+                        <td>ИНН</td>
+                        <td>{{ INN }}</td>
+                        <td>КПП</td>
+                        <td>{{ KPP }}</td>
+                        <td>&nbsp;</td>
+                        <td>ИНН</td>
+                        <td>{{ CINN }}</td>
+                        <td>КПП</td>
+                        <td>{{ CKPP }}</td>
+                    </tr>
+                    <tr>
+                        <td>Адрес</td>
+                        <td colspan="3">{{ address }}</td>
+                        <td>&nbsp;</td>
+                        <td>Адрес</td>
+                        <td colspan="3">{{ Caddress }}</td>
+                    </tr>
+                    <tr>
+                        <td>Тел.</td>
+                        <td colspan="3">{{ phoneNumber }}</td>
+                        <td>&nbsp;</td>
+                        <td>Тел.</td>
+                        <td colspan="3"> </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="credentials_bottom">
+                <colgroup>
+                    <col class="credentials_bottom-col_label_bank">
+                    <col class="credentials_bottom-col_value_bank">
+                    <col class="credentials_bottom-col_space">
+                    <col class="credentials_bottom-col_label_bank">
+                    <col class="credentials_bottom-col_value_bank">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>Р/с</td>
+                        <td>{{ rs }}</td>
+                        <td>&nbsp;</td>
+                        <td>Р/с</td>
+                        <td>{{ Crs }}</td>
+                    </tr>
+                    <tr>
+                        <td>К/с</td>
+                        <td>{{ ks }}</td>
+                        <td>&nbsp;</td>
+                        <td>К/с</td>
+                        <td>{{ Cks }}</td>
+                    </tr>
+                    <tr>
+                        <td>Банк</td>
+                        <td>{{ bankName }}</td>
+                        <td>&nbsp;</td>
+                        <td>Банк</td>
+                        <td>{{ CbankName }}</td>
+                    </tr>
+                    <tr>
+                        <td>БИК</td>
+                        <td>{{ bankBIK }}</td>
+                        <td>&nbsp;</td>
+                        <td>БИК</td>
+                        <td>{{ CbankBIK }}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+
+                            <table class="stamp">
+                                <tbody>
+                                    <tr>
+                                        <td class="stamp-value">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="stamp-label">М. П.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                        <td>&nbsp;</td>
+                        <td colspan="2">
+
+                            <table class="stamp">
+                                <tbody>
+                                    <tr>
+                                        <td class="stamp-value">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="stamp-label">М. П.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+	</body>
+</html>
